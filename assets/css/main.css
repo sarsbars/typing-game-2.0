@@ -4,9 +4,16 @@ body {
     background-color:#81d9cb;
     color: #111111;
     font-family: "Jersey 15", sans-serif;
+    align-items: flex-start;
     height: 100vh;
 }
 
+main {
+    align-items: flex-start;
+    gap: 20px; 
+    width: min(100% - 40px, 1400px); 
+    margin-inline: auto; 
+}
 .container {
     width: min(100% - 40px, 1080px);
     margin-inline: auto;
@@ -38,7 +45,7 @@ body {
 }
 
 /* - - - - - - - - - - - - - - - - - */
-/* - Top Row (Title and start button) - */
+/* Top Row (Title and start button)  */
 /* - - - - - - - - - - - - - - - - - */
 
 .top-row {
@@ -61,7 +68,7 @@ body {
 }
 
 /* - - - - - - - - - - - - - - - - - */
-/* - - - - - - Stopwatch - - - - - - - */
+/* - - - - - - Stopwatch - - - - - - */
 /* - - - - - - - - - - - - - - - - - */
 
 .clock-area {
@@ -79,7 +86,7 @@ body {
 }
 
 /* - - - - - - - - - - - - - - - - - */
-/* - - - Current Word Display - - - - */
+/* - - - Current Word Display  - - - */
 /* - - - - - - - - - - - - - - - - - */
 
 .word-display {
@@ -106,7 +113,7 @@ body {
 }
 
 /* - - - - - - - - - - - - - - - - - */
-/* - - - Cat Images - - - - - - */
+/* - - - - - Cat Images - - - - - - -*/
 /* - - - - - - - - - - - - - - - - - */
 
 .image-container {
@@ -124,7 +131,7 @@ body {
 }
 
 /* - - - - - - - - - - - - - - - - - */
-/* - - - User Input - - - - - - */
+/* - - - - -  User Input - - - - - - */
 /* - - - - - - - - - - - - - - - - - */
 
 form {
@@ -142,11 +149,45 @@ form {
 }
 
 /* - - - - - - - - - - - - - - - - - */
-/* - - - Copywrite - - - - - - */
+/*- - -  - - - Copywrite - - - - - - */
 /* - - - - - - - - - - - - - - - - - */
 
 .copywrite {
     margin-top: 20px;
     height: 70px;
     font-size: 2rem;
+}
+
+/* - - - - - - - - - - - - - - - - - */
+/*- - - - - - Scoreboard - - - - - - */
+/* - - - - - - - - - - - - - - - - - */
+
+.scoreboard {
+    width: 300px; 
+    height: 650px; 
+    background-color: #cb81d9; 
+    border-radius: 8px; 
+    padding: 20px;
+    flex-direction: column;
+    margin-left: auto; 
+}
+
+h2 {
+    font-size: 3rem;
+    color: #111111;
+    margin-bottom: 20px;
+}
+
+.high-scores-list {
+    font-size: 1.8rem;
+    color: #111111;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #81d9cb;
+}
+
+.high-scores-list:last-child {
+    border-bottom: none;
 }
