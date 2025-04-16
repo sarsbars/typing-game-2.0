@@ -1,0 +1,20 @@
+{
+  "name": "basic-files",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "lite-server"
+  },
+  "keywords": [
+    "ES",
+    "JS",
+    "modules",
+    "itty-bitty kitties"
+  ],
+  "author": "Sarah Mitchell",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}

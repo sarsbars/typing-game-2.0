@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Sarah Mitchell">
+        <meta name="description" content="My new cool project">
+        <meta name="keywords" content="web development, html, css, javascript, winnipeg, canada">
+        <title>Kitty Chowdown</title>
+        <link rel="icon" href="./assets/media/cat-icon.png" type="image/png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mrspecht/cdn/reset.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./assets/css/main.css" media="all" >
+        <script src="./assets/js/app.js" type="module" defer></script>
+    </head>
+    <body>
+      <main>
+        <section class="container centered flex">
+          <div class="game-container flex centered rounded">
+            <div class="top-row flex">
+              <p class="title">Kitty Chowdown</p>
+              <button class="start-restart">Start</button>
+            </div>
+            <div class="clock-area flex centered">
+              <i class="fa-solid fa-stopwatch"></i>
+              <p class="countdown">- - -</p>
+            </div>
+            <div class="word-display rounded flex centered">
+              <h2 class="current-word"></h2>
+            </div>
+            <div class="image-container rounded">
+              <img class="cat-image rounded" src="./assets/media/cat1.png">
+            </div>
+            <p class="hit-counter">0 Hits</p>
+            <form>
+              <input
+                type="text"
+                class="user-input rounded"
+                placeholder="Press Start to Play"
+              >
+            </form>
+            <p class="copywrite">Created by Sarah Mitchell</p>
+          </div>
+        </section>
+      </main>
+    </body>
+</html>

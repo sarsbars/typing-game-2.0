@@ -1,0 +1,152 @@
+@charset "utf-8";
+
+body {
+    background-color:#81d9cb;
+    color: #111111;
+    font-family: "Jersey 15", sans-serif;
+    height: 100vh;
+}
+
+.container {
+    width: min(100% - 40px, 1080px);
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+}
+
+.game-container {
+    width: 450px;
+    height: 650px;
+    background-color: #cb81d9;
+}
+
+.flex {
+    display: flex;
+}
+
+.centered {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.rounded {
+    border-radius: 8px;
+}
+
+/* - - - - - - - - - - - - - - - - - */
+/* - Top Row (Title and start button) - */
+/* - - - - - - - - - - - - - - - - - */
+
+.top-row {
+    height: 70px;
+    justify-content: space-between;
+    gap: 120px;
+    align-items: center;
+}
+
+.title {
+    font-size: 3rem;
+}
+
+.start-restart {
+    font-size: 3rem;
+    padding: 0 5px;
+    background-color: #cb81d9;
+    color: #111111;
+    width: 100px;
+}
+
+/* - - - - - - - - - - - - - - - - - */
+/* - - - - - - Stopwatch - - - - - - - */
+/* - - - - - - - - - - - - - - - - - */
+
+.clock-area {
+    margin-top: 20px;
+    height: 100px;
+}
+
+.fa-solid.fa-stopwatch {
+    font-size: 3rem;
+}
+
+.countdown {
+    margin-top: 10px;
+    font-size: 3.5rem;
+}
+
+/* - - - - - - - - - - - - - - - - - */
+/* - - - Current Word Display - - - - */
+/* - - - - - - - - - - - - - - - - - */
+
+.word-display {
+    height: 140px;
+    width: 400px;
+    background-color: #81d9cb;
+    margin-bottom: 5px;
+}
+
+.current-word {
+    user-select: none;
+    font-size: 5.5rem;
+    font-weight: 100;
+    text-align: center;
+}
+
+.hit-counter {
+    height: 70px;
+    font-size: 3rem;
+}
+
+.correct {
+    color: #fcfcfc;
+}
+
+/* - - - - - - - - - - - - - - - - - */
+/* - - - Cat Images - - - - - - */
+/* - - - - - - - - - - - - - - - - - */
+
+.image-container {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: solid 2px black;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* - - - - - - - - - - - - - - - - - */
+/* - - - User Input - - - - - - */
+/* - - - - - - - - - - - - - - - - - */
+
+form {
+    height: 70px;
+    width: 400px;
+}
+
+.user-input {
+    width: 400px;
+    height: 70px;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 200;
+    color: #111111;
+}
+
+/* - - - - - - - - - - - - - - - - - */
+/* - - - Copywrite - - - - - - */
+/* - - - - - - - - - - - - - - - - - */
+
+.copywrite {
+    margin-top: 20px;
+    height: 70px;
+    font-size: 2rem;
+}
