@@ -49,36 +49,28 @@ function startCountdown() {
     }, 1000);
   }
 
-function startGame() {
+  function startGame() {
     gameStarted = true;
     startCountdown();
     backgroundMusic.play();
-
-    wordList = [...words]; 
-    wordList.sort(() => Math.random() - 0.5); 
-    currentWord = wordList[wordList.length - 1];
-    wordList.pop();
-
-    currentWordDisplay.textContent = currentWord; 
-    userInput.value = '';
+  
+    wordList = [...words];
+    wordList.sort(() => Math.random() - 0.5);
+  
+    resetGameDisplay(); 
+  
+    getNextWord(); 
     userInput.focus();
-    userInput.placeholder = "Enter word here";
-    
-    hits = 0; 
-    hitCounterDisplay.textContent = `${hits} Hits`;
+  }
 
-    startButton.textContent = "Restart";
-    updateCatImage();
-}
-
-function resetGame() {
+  function resetGame() {
     clearInterval(countdownInterval);
     countdownDisplay.textContent = '- - -';
-    userInput.value = '';
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
-    startGame();
-}
+  
+    startGame(); 
+  }
 
 function endGame() {
     gameStarted = false;
@@ -99,6 +91,15 @@ function getNextWord() {
         endGame();
     }
 }
+function resetGameDisplay() {
+    userInput.value = '';
+    userInput.placeholder = "Enter word here";
+    hits = 0;
+    hitCounterDisplay.textContent = `${hits} Hits`;
+    currentWordDisplay.textContent = ''; 
+    startButton.textContent = "Restart";
+    updateCatImage(); 
+  }
 
 utils.listen('click', button, () => { 
     if (startButton.textContent === "Start") {
@@ -144,27 +145,22 @@ utils.listen('keydown', userInput, (event) => {
 
 //used W3 schools to get a switch to work 
 function updateCatImage() {
-    if (gameStarted === false) {
-      catImage.src = './assets/media/cat1.png';
-      return;
-    }
-    switch (true) {
-        case hits < 5:
-            catImage.src = './assets/media/cat1.png';
-            break;
-        case hits < 15:
-            catImage.src = './assets/media/cat2.png';
-            break;
-        case hits < 25:
-            catImage.src = './assets/media/cat3.png';
-            break;
-        case hits < 35:
-            catImage.src = './assets/media/cat4.png';
-            break;
-        case hits < 45:
-            catImage.src = './assets/media/cat5.png';
-            break;
-        default:
-            catImage.src = './assets/media/cat6.png';
-    }
+  if (gameStarted === false) {
+    catImage.src = './assets/media/cat1.png';
+    return;
+  }
+
+  if (hits < 5) {
+    catImage.src = './assets/media/cat1.png';
+  } else if (hits < 15) {
+    catImage.src = './assets/media/cat2.png';
+  } else if (hits < 25) {
+    catImage.src = './assets/media/cat3.png';
+  } else if (hits < 35) {
+    catImage.src = './assets/media/cat4.png';
+  } else if (hits < 45) {
+    catImage.src = './assets/media/cat5.png';
+  } else {
+    catImage.src = './assets/media/cat6.png';
+  }
 }
