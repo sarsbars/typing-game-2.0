@@ -9,11 +9,15 @@ body {
 }
 
 main {
-    align-items: flex-start;
-    gap: 20px; 
-    width: min(100% - 40px, 1400px); 
-    margin-inline: auto; 
+    align-items: center; /* This will center items vertically */
+    gap: 20px;
+    width: min(100% - 40px, 1400px);
+    margin-inline: auto;
+    min-height: 100vh; /* Ensure main takes up the full viewport height */
+    display: flex; /* Make sure it's a flex container */
+    flex-direction: row; /* Keep the game container and scoreboard side-by-side */
 }
+
 .container {
     width: min(100% - 40px, 1080px);
     margin-inline: auto;
@@ -170,6 +174,7 @@ form {
     padding: 20px;
     flex-direction: column;
     margin-left: auto; 
+    margin-top: 25px;
 }
 
 h2 {
@@ -185,6 +190,7 @@ h2 {
     width: 100%;
     text-align: left;
     padding-bottom: 5px;
+    margin-left: 15px;
     border-bottom: 1px solid #81d9cb;
 }
 

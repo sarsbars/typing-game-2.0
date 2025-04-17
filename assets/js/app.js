@@ -1,14 +1,22 @@
 'use strict';
+
 import * as utils from "./utils.js";
 import words from './words.js';
 
-const button = utils.select('.start-restart');
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*                          DOM Element References                           */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 const countdownDisplay = utils.select('.countdown');
 const userInput = utils.select('.user-input');
 const currentWordDisplay = utils.select('.current-word');
 const startButton = utils.select('.start-restart');
 const hitCounterDisplay = utils.select('.hit-counter'); 
 const catImage = utils.select('.cat-image');
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*                         Game State Variables                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 let timeLeft = 100; 
 let currentWord = '';
@@ -20,13 +28,9 @@ const backgroundMusic = new Audio("./assets/media/background.mp3");
 let wordsPlayedThisGame = 0; 
 let scoreHistory = loadScoreHistory(); 
 
-function getDate() {
-    const options = {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit'
-    };
-}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*                         Game Logic Functions                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 function startCountdown() {
     if (countdownInterval !== null) {
@@ -44,7 +48,7 @@ function startCountdown() {
         countdownDisplay.textContent = "Time's up!";
         clearInterval(countdownInterval);
       }
-    }, 1000);
+    }, 1000); 
   }
 
 function startGame() {
@@ -75,14 +79,23 @@ function endGame() {
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
     startButton.textContent = "Restart";
-    const finalScore = new Score(hits);
-    console.log("Final Score (Class):", finalScore);
-    saveScore(hits, wordsPlayedThisGame);
+    const finalScoreDetails = createScoreObject(hits, wordsPlayedThisGame);
+    const finalScore = new Score(
+        finalScoreDetails.hits,
+        finalScoreDetails.percentage,
+        finalScoreDetails.date
+    );    
+    saveScore(finalScore);
     wordsPlayedThisGame = 0;
-    displayScoreboard(); 
+    displayScoreboard();
+    userInput.disabled = true;
+    userInput.value = '';
 }
 
 function getNextWord() {
+    if (!gameStarted) { 
+        return;
+    }
     if (wordList.length > 0) {
         currentWord = wordList[wordList.length - 1];
         currentWordDisplay.textContent = currentWord;
@@ -103,48 +116,6 @@ function resetGameDisplay() {
     startButton.textContent = "Restart";
     updateCatImage(); 
   }
-
-utils.listen('click', button, () => { 
-    if (startButton.textContent === "Start") {
-        startGame();
-        startButton.textContent = "Restart";
-        gameStarted = true;
-    } else if (startButton.textContent === "Restart") {
-        resetGame();
-    }
-  });
-
-
-utils.listen('input', userInput, () => {
-    const typedWord = userInput.value;
-    let displayWord = '';
-    let correct = true;
-
-    for (let i = 0; i < currentWord.length; i++) {
-        if (typedWord[i] === currentWord[i]) {
-            displayWord += '<span class="correct">' + currentWord[i] + '</span>';
-        } else {
-            displayWord += currentWord[i];
-            correct = false;
-        }
-    }
-   
-    currentWordDisplay.innerHTML = displayWord;
-
-    if (typedWord === currentWord && correct) {
-        hits++;
-        hitCounterDisplay.textContent = `${hits} Hits`;
-        getNextWord();
-        updateCatImage()
-    }
-});
-
-//The following from AI, how to prevent form submission if user hits enter
-utils.listen('keydown', userInput, (event) => {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-    }
-});
 
 function updateCatImage() {
   if (gameStarted === false) {
@@ -167,17 +138,33 @@ function updateCatImage() {
   }
 }
 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*                          Score Handling Functions                         */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+class Score {
+    constructor(hits, percentage, date) {
+        this.hits = hits;
+        this.percentage = percentage;
+        this.date = date;
+    }
+}
+
 function getDate(timestamp) {
     const date = new Date(timestamp);
-    const options = { year: 'numeric', month: 'short', day: '2-digit' };
-    return date.toLocaleDateString(undefined, options);
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit'
+    };
+    return date.toLocaleDateString('en-CA', options); 
 }
 
 function createScoreObject(hits, totalWords) {
     const date = Date.now();
     const percentage = totalWords > 0 ? (hits / totalWords) * 100 : 0;
     return {
-        date: getDate(date), 
+        date: getDate(date),
         hits: hits,
         percentage: percentage.toFixed(2)
     };
@@ -188,12 +175,11 @@ function loadScoreHistory() {
     return storedScores ? JSON.parse(storedScores) : [];
 }
 
-function saveScore(hits, totalWords) {
-    const scoreObject = createScoreObject(hits, totalWords);
+function saveScore(scoreObject) {
     scoreHistory.push(scoreObject);
 
     scoreHistory.sort((a, b) => b.hits - a.hits);
-    const topScoresToSave = scoreHistory.slice(0, 10); 
+    const topScoresToSave = scoreHistory.slice(0, 10);
     localStorage.setItem("scoreHistory", JSON.stringify(topScoresToSave));
     scoreHistory = topScoresToSave;
 }
@@ -205,9 +191,9 @@ function displayScoreboard() {
         return;
     }
 
-    const sortedScores = scoreHistory.sort((a, b) => b.hits - a.hits); 
+    const topScores = scoreHistory.slice(0, 9);
+
     highScoresList.innerHTML = '';
-    const topScores = sortedScores.slice(0, 9); 
 
     if (topScores.length === 0) {
         const noScoresMessage = utils.create('p');
@@ -216,9 +202,61 @@ function displayScoreboard() {
     } else {
         topScores.forEach((score, index) => {
             const scoreEntry = utils.create('p');
-            scoreEntry.classList.add('high-score-entry'); 
-            scoreEntry.textContent = `${index + 1}. ${score.hits} Hits (${score.percentage}%) - ${score.date}`;
+            const rank = `${index + 1}. `;
+            const hitsText = `${score.hits} Hits `;
+            const percentageText = `(${score.percentage}%) - `;
+            const dateText = `${score.date}`;
+            scoreEntry.textContent = rank + hitsText + percentageText + dateText;
             highScoresList.appendChild(scoreEntry);
         });
     }
 }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*                             Event Listeners                               */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+utils.listen('load', window, displayScoreboard);
+// I know the instructions say to load it when the game ends, but I think it would
+// be better for users to see the high scores at the start. 
+
+utils.listen('click', startButton, () => {
+    if (startButton.textContent === "Start") {
+        startGame();
+        startButton.textContent = "Restart";
+        gameStarted = true;
+    } else if (startButton.textContent === "Restart") {
+        resetGame();
+    }
+});
+
+utils.listen('input', userInput, () => {
+    const typedWord = userInput.value;
+    let displayWord = '';
+    let correct = true;
+
+    for (let i = 0; i < currentWord.length; i++) {
+        if (typedWord[i] === currentWord[i]) {
+            displayWord += '<span class="correct">' + currentWord[i] + '</span>';
+        } else {
+            displayWord += currentWord[i];
+            correct = false;
+        }
+    }
+
+    currentWordDisplay.innerHTML = displayWord;
+
+    if (typedWord === currentWord && correct) {
+        hits++;
+        hitCounterDisplay.textContent = `${hits} Hits`;
+        getNextWord();
+        updateCatImage()
+    }
+});
+
+//The following from AI, how to prevent form submission if user hits enter
+utils.listen('keydown', userInput, (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+    }
+});
