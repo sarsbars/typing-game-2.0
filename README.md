@@ -12,6 +12,11 @@ where users type words that appear on the screen before the time runs out.
 -   **Dynamic Cat Illustration:** Features six different states of a kitty cat illustration, reflecting the user's typing accuracy and speed.
 -   **Responsive Design:** Ensures the game is playable on various screen sizes.
 
+### Use Cases
+- Typing enthusiasts can practice daily to improve speed and accuracy, using the timer and scores to track progress over time.
+- Educators might incorporate it into classrooms for engaging typing lessons, with the cat feedback providing immediate visual motivation for students.
+- Casual gamers on mobile devices can play quick sessions to unwind, benefiting from the responsive design and local storage for persistent high scores.
+
 ## Technologies Used
 
 -   HTML5
